@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"os"
 	"log"
+	"os"
 	"syscall"
 )
 
@@ -15,7 +15,7 @@ var kernelVersionFlag = flag.Bool("kernel-version", false, "print the kernel ver
 var machineFlag = flag.Bool("machine", false, "print the machine hardware name")
 var osFlag = flag.Bool("operating-system", false, "print the operating system")
 
-func init()  {
+func init() {
 	flag.BoolVar(allFlag, "a", false, "print all information, in the following order, except omit -p and -i if unknown:")
 	flag.BoolVar(nodeNameFlag, "n", false, "print the network node hostname")
 	flag.BoolVar(kernelReleaseFlag, "r", false, "print the kernel release")
@@ -36,15 +36,15 @@ func charsToString(ca []int8) string {
 	return string(s[0:lens])
 }
 
-func generateOutput(output *string, input *string)  {
+func generateOutput(output *string, input *string) {
 	if *output != "" {
 		*output += " "
 	}
 	*output += *input
 }
 
-func main()  {
-	var buf syscall.Utsname;
+func main() {
+	var buf syscall.Utsname
 	var result string
 
 	flag.Usage = func() {
@@ -63,7 +63,7 @@ func main()  {
 	flag.Parse()
 
 	if len(os.Args) == 1 {
-		*osFlag = true;
+		*osFlag = true
 	}
 
 	err := syscall.Uname(&buf)
@@ -72,35 +72,35 @@ func main()  {
 	}
 
 	if *allFlag {
-		*nodeNameFlag = true;
-		*kernelReleaseFlag = true;
-		*kernelVersionFlag = true;
-		*machineFlag = true;
-		*osFlag = true;
+		*nodeNameFlag = true
+		*kernelReleaseFlag = true
+		*kernelVersionFlag = true
+		*machineFlag = true
+		*osFlag = true
 	}
 
 	if *nodeNameFlag {
-		str := charsToString(buf.Nodename[:]);
+		str := charsToString(buf.Nodename[:])
 		generateOutput(&result, &str)
 	}
 
 	if *kernelReleaseFlag {
-		str := charsToString(buf.Release[:]);
+		str := charsToString(buf.Release[:])
 		generateOutput(&result, &str)
 	}
 
 	if *kernelVersionFlag {
-		str := charsToString(buf.Version[:]);
+		str := charsToString(buf.Version[:])
 		generateOutput(&result, &str)
 	}
 
 	if *machineFlag {
-		str := charsToString(buf.Machine[:]);
+		str := charsToString(buf.Machine[:])
 		generateOutput(&result, &str)
 	}
 
 	if *osFlag {
-		str := charsToString(buf.Sysname[:]);
+		str := charsToString(buf.Sysname[:])
 		generateOutput(&result, &str)
 	}
 
