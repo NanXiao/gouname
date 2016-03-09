@@ -52,7 +52,6 @@ func main() {
 		fmt.Println("Print certain system information.  With no OPTION, same as -o.")
 		fmt.Println()
 		fmt.Println("  -a, --all                print all information, in the following order,")
-		fmt.Println("                             except omit -p and -i if unknown:")
 		fmt.Println("  -n, --nodename           print the network node hostname")
 		fmt.Println("  -r, --kernel-release     print the kernel release")
 		fmt.Println("  -v, --kernel-version     print the kernel version")
